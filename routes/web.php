@@ -16,3 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('/hello', function () {
+//     // 方法一
+//     // return view('hello', ['name' => 'victoria']);
+//     // 方法二
+//     // $name = 'pilar';
+//     // return view('hello')->with('name', $name);
+//     // 方法三 在function()括號裡帶參數
+// });
+
+Route::get('/hello/{id}', function ($id) {
+    // return view('hello',['id' => $id]);
+    $name = 'victoria';
+    $age = 28;
+    return view('hello', ['name' => $name, 'age' => $age, 'id' => $id]);
+    return view('hello', compact('name', 'age', 'id'));
+});
