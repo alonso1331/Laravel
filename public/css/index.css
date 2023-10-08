@@ -1,0 +1,115 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    /* background-color: #7CA1C4; */
+    background-color: aliceblue;
+}
+
+/* 共同的設定 */
+nav, footer{
+    background-color: #fafafa;
+    color: #969696;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #969696;
+}
+
+/* navbar */
+nav{
+    height: 80px;
+    padding: 5px 200px;
+}
+
+.logo img{
+    width: 70px;
+}
+
+nav ul{
+    margin-bottom: 0px;
+}
+
+nav ul a{
+    margin-right: 20px;
+    font-weight: bolder;
+}
+
+nav ul a:nth-child(6){
+    position: relative;
+}
+
+nav i{
+    font-size: 18px;
+}
+
+nav .bi-person-circle::after{
+    position: absolute;
+    content: '▼';
+    margin-top: 3px;
+    margin-left: 10px;
+    transform: rotate(233deg);
+    font-size: 14px;
+}
+
+/* main */
+main{
+    width: 100%;
+    min-height: 34vh;
+}
+
+/* footer */
+footer{
+    padding: 160px 200px 20px 200px;
+}
+
+footer div:nth-child(5){
+    margin-right: 0px;
+}
+
+footer ul{
+    padding-left: 0px;
+}
+
+footer .conpany{
+    /* width: 240px; */
+    width: 23%;
+    padding-right: 68px;
+    /* margin-right: 50px; */
+    color: #000;
+    font-weight: bolder;
+}
+
+footer .conpany p{
+    font-size: 20px;
+}
+
+footer .conpany span{
+    font-size: 14px;
+}
+
+footer .link{
+    width: 17.9%;
+}
+
+footer .copyright{
+    margin-top: 140px;
+    width: 75%;
+}
+
+footer .social-media{
+    margin-top: 140px;
+    width: 25%;
+}
+
+footer .social-media a{
+    margin-right: 10px;
+}

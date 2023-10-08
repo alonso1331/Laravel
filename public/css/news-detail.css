@@ -1,0 +1,37 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.container-xl{
+    padding: 0px 20px;
+}
+
+.container-xl h1{
+    font-weight: bolder;
+    font-size: 32px;
+}
+
+hr{
+    margin: 10px 0px 20px;
+}
+
+.container-xl .info{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.container-xl .info .date{
+    margin-right: 16px;
+}
+
+.container-xl .info .date span{
+    color: #db3b00;
+}
+
+.container-xl .text{
+    font-size: 18px;
+    line-height: 2;
+}

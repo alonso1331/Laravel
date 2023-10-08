@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>hello, {{ $name }},  {{ $age }},  {{ $id }}</h2>
+    <h2>hello, {{ $name }},  {{ $age }}</h2>
 </body>
 </html>

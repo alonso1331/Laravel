@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
+// laravel 7以前適用
+// Route::get('/', 'FrontController@index');
+// laravel 7以後用
+Route::get('/', [FrontController::class, 'index']);
 
 // Route::get('/hello', function () {
 //     // 方法一
@@ -26,10 +32,8 @@ Route::get('/', function () {
 //     // 方法三 在function()括號裡帶參數
 // });
 
-Route::get('/hello/{id}', function ($id) {
-    // return view('hello',['id' => $id]);
-    $name = 'victoria';
-    $age = 28;
-    return view('hello', ['name' => $name, 'age' => $age, 'id' => $id]);
-    return view('hello', compact('name', 'age', 'id'));
-});
+Route::get('/hello', [FrontController::class, 'hello']);
+
+Route::get('/news', [FrontController::class, 'news']);
+
+Route::get('/news/{id}', [FrontController::class, 'newsDetail']);
