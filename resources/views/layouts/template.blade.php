@@ -13,10 +13,9 @@
 </head>
 <body>
     <nav class="d-flex justify-content-between">
-        <div class="logo"><img src="{{ asset('img/logo.png') }}" alt=""></div>
+        <a href="{{ asset('/') }}"  class="logo"><img src="{{ asset('img/logo.png') }}" alt=""></a>
         <ul class="d-flex flex-row align-items-center">
-            <li><a href="#" target="_blank" rel="noopener noreferrer">Blog</a></li>
-            <li><a href="#" target="_blank" rel="noopener noreferrer">Portfolio</a></li>
+            <li><a href="{{ asset('/news') }}" target="_blank" rel="noopener noreferrer">News</a></li>
             <li><a href="#" target="_blank" rel="noopener noreferrer">About</a></li>
             <li><a href="#" target="_blank" rel="noopener noreferrer">Cantact</a></li>
             <a href="#" target="_blank" rel="noopener noreferrer"><i class="bi bi-cart3"></i></a>

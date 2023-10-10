@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FrontController;
 
 
@@ -15,25 +17,17 @@ use App\Http\Controllers\FrontController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('index');
-// });
-// laravel 7以前適用
-// Route::get('/', 'FrontController@index');
-// laravel 7以後用
 Route::get('/', [FrontController::class, 'index']);
 
-// Route::get('/hello', function () {
-//     // 方法一
-//     // return view('hello', ['name' => 'victoria']);
-//     // 方法二
-//     // $name = 'pilar';
-//     // return view('hello')->with('name', $name);
-//     // 方法三 在function()括號裡帶參數
-// });
+Route::prefix('news')->group(function (){
+    Route::get('/', [FrontController::class, 'newsList']);
+    Route::get('/{id}', [FrontController::class, 'newsDetail']);
+});
 
-Route::get('/hello', [FrontController::class, 'hello']);
+Route::get('/create-news',[FrontController::class, 'createNews']);
 
-Route::get('/news', [FrontController::class, 'news']);
+Route::post('/contact', [FrontController::class, 'contact']);
 
-Route::get('/news/{id}', [FrontController::class, 'newsDetail']);
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
