@@ -22,7 +22,8 @@
             <img src="{{ $item->img_url }}" alt="">
             <div class="info">
                 <h2>最新消息</h2>
-                <a href="news/{{ $item->id }}">{{ $item->title }}</a>
+                {{-- <a href="news/{{ $item->id }}">{{ $item->title }}</a> --}}
+                <a href="{{ asset('news/'.$item->id) }}">{{ $item->title }}</a>
                 <h3>{{ $item->date }}</h3>
                 <p>{{ $item->content }}</p>
             </div>

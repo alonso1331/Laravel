@@ -18,6 +18,12 @@ class FrontController extends Controller
         return view('index');
     }
 
+    public function welcome()
+    {
+        return view('welcome');
+    }
+
+
     public function newsList()
     {
         // $news = DB::table('news')->get();
