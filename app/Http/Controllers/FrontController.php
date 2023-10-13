@@ -52,4 +52,8 @@ class FrontController extends Controller
         return redirect('/index');
     }
 
+    public function login(){
+        return view('auth.login');
+    }
+
 }

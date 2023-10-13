@@ -19,7 +19,7 @@
             <li><a href="#" target="_blank" rel="noopener noreferrer">About</a></li>
             <li><a href="#" target="_blank" rel="noopener noreferrer">Cantact</a></li>
             <a href="#" target="_blank" rel="noopener noreferrer"><i class="bi bi-cart3"></i></a>
-            <a href="#" target="_blank" rel="noopener noreferrer"><i class="bi bi-person-circle"></i></a>
+            <a href="{{ asset('/login') }}" target="_blank" rel="noopener noreferrer"><i class="bi bi-person-circle"></i></a>
         </ul>
     </nav>
 

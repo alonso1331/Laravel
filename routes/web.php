@@ -21,7 +21,9 @@ use App\Models\News;
 // 前台
 Route::get('/', [FrontController::class, 'index']);
 
-Route::get('/', [FrontController::class, 'welcome']);
+Route::get('/welcome', [FrontController::class, 'welcome']);
+
+Route::get('/login', [FrontController::class, 'login']);
 
 Route::prefix('news')->group(function (){
     Route::get('/', [FrontController::class, 'newsList']);
