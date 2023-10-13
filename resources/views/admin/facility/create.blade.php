@@ -9,19 +9,19 @@
     <nav class="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ asset('/admin') }}">首頁</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('news.index') }}">最新消息管理</a></li>
-            <li class="breadcrumb-item active" aria-current="page">新增消息</li>
+            <li class="breadcrumb-item"><a href="{{ route('facility.index') }}">設施介紹管理</a></li>
+            <li class="breadcrumb-item active" aria-current="page">新增設施</li>
         </ol>
     </nav>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <h2 class="card-header pt-3 pb-2">
-                    最新消息 - 新增
+                    設施介紹 - 新增
                 </h2>
 
                 <div class="card-body">
-                    <form action="{{ route('news.store') }}" method="post">
+                    <form action="{{ route('facility.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row py-2">
                             <label for="title" class="col-sm-2 col-form-label">標題</label>
@@ -30,15 +30,9 @@
                             </div>
                         </div>
                         <div class="form-group row py-2">
-                            <label for="date" class="col-sm-2 col-form-label">日期</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" name="date" required>
-                            </div>
-                        </div>
-                        <div class="form-group row py-2">
                             <label for="img_url" class="col-sm-2 col-form-label">圖片</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="img_url" required>
+                                <input type="file" class="form-control" name="img_url" accept="image/*" required>
                             </div>
                         </div>
                         <div class="form-group row py-2">

@@ -52,7 +52,7 @@
                                     <button class="btn btn-danger delete-btn">刪除</button>
                                     <form class="d-none" action="{{ route('news.destroy', ['id' => $item->id]) }}" method="post">
                                         @csrf
-                                        @method('delete')
+                                        @method('DELETE')
                                     </form>
                                 </td>
                             </tr>
@@ -72,25 +72,14 @@
         let table = new DataTable('#myTable');
 
         // 刪除功能
-        const deletes = document.querySelectorAll('.delete-btn');
-        console.log(deletes);
-        deletes.forEach(deletebtn => {
+        const deletebtns = document.querySelectorAll('.delete-btn');
+        // console.log(deletes);
+        deletess.forEach(function(deletebtn) {
             deletebtn.addEventListener('click', ()=> {
                 if (confirm('您確定要刪除嗎？')) {
-                    this.nextElementSibling.submit();
+                    deletebtn.nextElementSibling.submit();
                 }
             });
         });
-
-        // const btns = document.querySelectorAll('button');
-
-        // btns.forEach(function(btn){
-        //     btn.addEventListener('click', () => {
-        //         if(confirm('您確定要刪除嗎？')){
-        //             this.nextElementSibling.submit();
-        //         }
-        //     })
-        // });
-
     </script>
 @endsection

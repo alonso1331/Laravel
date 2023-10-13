@@ -34,6 +34,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ asset('/admin/news') }}">最新消息管理</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('facility.index') }}">設施介紹管理</a>
+                            </li>
                         @endguest
                     </ul>
 
