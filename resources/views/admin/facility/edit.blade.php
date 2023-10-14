@@ -45,7 +45,7 @@
                         <div class="form-group row py-2">
                             <label for="content" class="col-sm-2 col-form-label">內容</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="content" rows="5" required>{{ $facility->content }}</textarea>
+                                <textarea class="form-control" name="content" id="content" rows="5" required>{{ $facility->content }}</textarea>
                             </div>
                         </div>
                         <div class="form-group row py-2">

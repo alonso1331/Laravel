@@ -12,6 +12,15 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="summernote-bs5.css" rel="stylesheet"> -->
+    <style>
+        .note-btn.dropdown-toggle:after{
+            content:none;
+        }
+    </style>
     @yield('css')
 </head>
 <body>
@@ -86,6 +95,19 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="summernote-bs5.js"></script> -->
+    <script>
+        $(document).ready(function() {
+            $('#content').summernote({
+                placeholder: '請輸入內容',
+                tabsize: 3,
+                height: 200
+            });
+        });
+    </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @yield('js')
 </body>

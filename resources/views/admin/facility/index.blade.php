@@ -3,7 +3,6 @@
 {{-- @section('title', '後台首頁') --}}
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <style>
         #myTable th, td{
             text-align: center;
@@ -62,7 +61,6 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         let table = new DataTable('#myTable',{
