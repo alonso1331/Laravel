@@ -6,7 +6,8 @@
 
 body{
     /* background-color: #7CA1C4; */
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
+    background-color: #ffc;
 }
 
 /* 共同的設定 */
@@ -15,7 +16,7 @@ nav, footer{
     color: #969696;
 }
 
-li{
+nav li{
     list-style: none;
 }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\Contact;
+use App\Models\Facility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,16 @@ class FrontController extends Controller
         return view('welcome');
     }
 
+    public function contact(Request $request){
+        Contact::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'message' => $request->message
+        ]);
+
+        return redirect('/index');
+    }
 
     public function newsList()
     {
@@ -41,19 +52,13 @@ class FrontController extends Controller
         return view('front.news.detail', compact('news'));
     }
 
-    public function contact(Request $request){
-        Contact::create([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'message' => $request->message
-        ]);
-
-        return redirect('/index');
+    public function facility()
+    {
+        $facilities = Facility::get();
+        return view('front.facility.list', compact('facilities'));
     }
 
     public function login(){
         return view('auth.login');
     }
-
 }

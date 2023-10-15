@@ -9,7 +9,7 @@
 
 @section('main')
     <div class="container-xl">
-        <h1 class="text-center m-5 ">最新消息</h1>
+        <h1 class="text-center m-5">最新消息</h1>
         <ul class="d-flex flex-row justify-content-end mb-4">
             <li>資料總筆數:<span>70</span></li>
             <li>每頁筆數：<span>10</span></li>

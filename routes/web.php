@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ToolboxController;
 use App\Models\facility;
 use App\Models\News;
 
@@ -25,16 +26,26 @@ Route::get('/', [FrontController::class, 'index']);
 
 Route::get('/welcome', [FrontController::class, 'welcome']);
 
+// 聯絡我們
+Route::post('/contact', [FrontController::class, 'contact']);
+
+// 登入頁面
 Route::get('/login', [FrontController::class, 'login']);
 
+// 最新消息
 Route::prefix('news')->group(function (){
-    Route::get('/', [FrontController::class, 'newsList']);
-    Route::get('/{id}', [FrontController::class, 'newsDetail']);
+    Route::get('/', [FrontController::class, 'newsList'])->name('news.list');
+    Route::get('/{id}', [FrontController::class, 'newsDetail'])->name('news.content');
 });
 
-Route::get('/create-news',[FrontController::class, 'createNews']);
+// 設施介紹
+// Route::prefix('facility')->group(function (){
+//     Route::get('/', [FrontController::class, 'facilityList'])->name('facility.list');
+//     // Route::get('/{id}',[FacilityController::class, 'facilityDetail'])->name('facility.content');
+// });
+Route::get('/facility', [FrontController::class, 'facility'])->name('facility');
 
-Route::post('/contact', [FrontController::class, 'contact']);
+Route::get('/create-news',[FrontController::class, 'createNews']);
 
 Auth::routes();
 
@@ -64,5 +75,8 @@ Route::prefix('/admin')->middleware(['auth'])->group(function (){
         Route::patch('/{id}',[FacilityController::class, 'update'])->name('facility.update');
         Route::delete('/{id}', [FacilityController::class, 'destroy'])->name('facility.destroy');
     });
+
+    // 上傳圖片
+    Route::post('/image-upload', [ToolboxController::class, 'imageUpload'])->name('tool.image_upload');
 
 });

@@ -33,7 +33,7 @@
                         <div class="form-group row py-2">
                             <label for="img_url" class="col-sm-2 col-form-label">圖片</label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control" name="img_url" accept="image/*" value="{{ Storage::url($facility->img_url) }}" required>
+                                <input type="file" class="form-control" name="img_url" accept="image/*" value="{{ Storage::url($facility->img_url) }}">
                             </div>
                         </div>
                         <div class="form-group row py-2">
