@@ -9,6 +9,7 @@ use App\Models\Facility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 
 class FrontController extends Controller
@@ -24,7 +25,27 @@ class FrontController extends Controller
         return view('welcome');
     }
 
-    public function contact(Request $request){
+    public function contact(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email'=>'email',
+            'g-recaptcha-response' => 'recaptcha',
+            recaptchaFieldName() => recaptchaRuleName()
+        ]);
+
+        // $validator = Validator::make(request()->all(), [
+        //     'g-recaptcha-response' => 'recaptcha',
+        //     recaptchaFieldName() => recaptchaRuleName()
+        // ]);
+
+        // // check if validator fails
+        // if($validator->fails()) {
+        //     $errors = $validator->errors();
+        //     return redirect('/')
+        //             ->withErrors($validator)
+        //             ->withInput();
+        // }
+
         Contact::create([
             'name' => $request->name,
             'phone' => $request->phone,
@@ -32,7 +53,7 @@ class FrontController extends Controller
             'message' => $request->message
         ]);
 
-        return redirect('/index');
+        return redirect('/');
     }
 
     public function newsList()
