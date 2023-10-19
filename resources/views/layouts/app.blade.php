@@ -49,6 +49,15 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('products.index') }}">產品管理</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    銷售據點
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('store-areas.index')}}">區域管理</a>
+                                    <a class="dropdown-item" href="">門市管理</a>
+                                </div>
+                            </li>
                         @endguest
                     </ul>
 

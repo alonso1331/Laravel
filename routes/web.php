@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ToolboxController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\ProductCategoryContoller;
+use App\Http\Controllers\StoreAreaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,10 @@ Route::prefix('/admin')->middleware(['auth'])->group(function (){
 
     // 產品類別
     Route::resource('/product-categories', ProductCategoryContoller::class);
+
+    // 銷售據點
+    // 區域管理
+    Route::resource('/store-areas', StoreAreaController::class);
 
     // 上傳圖片
     Route::post('/image-upload', [ToolboxController::class, 'imageUpload'])->name('tool.image-upload');
