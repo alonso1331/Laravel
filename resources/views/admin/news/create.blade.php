@@ -8,7 +8,7 @@
 <div class="container">
     <nav class="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ asset('/admin') }}">首頁</a></li>
+            <li class="breadcrumb-item"><a href="{{ asset('/home') }}">首頁</a></li>
             <li class="breadcrumb-item"><a href="{{ route('news.index') }}">最新消息管理</a></li>
             <li class="breadcrumb-item active" aria-current="page">新增消息</li>
         </ol>

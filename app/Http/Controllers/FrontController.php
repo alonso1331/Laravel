@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\Contact;
+use App\Models\Product;
 use App\Models\Facility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\ProductCategory;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -77,6 +80,28 @@ class FrontController extends Controller
     {
         $facilities = Facility::get();
         return view('front.facility.list', compact('facilities'));
+    }
+
+    public function productList(Request $request)
+    {
+        $productCategories = ProductCategory::get();
+
+        if($request->category_id){
+            $products = Product::where('product_category_id', $request->category_id)->get();
+        }else{
+            $products = Product::get();
+        }
+
+        return view('front.product.list', compact('products', 'productCategories'));
+    }
+
+    public function productDetail($id)
+    {
+        // with()的設定，要先在model建立好hasMany()的關聯性，就不用從ProductImage去找關聯
+        $products = Product::with('productImages')->find($id);
+        // $productImages = ProductImage::where('product_id', $products->id)->get();
+
+        return view('front.product.detail', compact('products'));
     }
 
     public function login(){

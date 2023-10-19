@@ -18,7 +18,7 @@
         <ul class="d-flex flex-row align-items-center">
             <li><a href="{{ route('news.list') }}" target="_blank" rel="noopener noreferrer">News</a></li>
             <li><a href="{{ route('facility') }}" target="_blank" rel="noopener noreferrer">Facility</a></li>
-            <li><a href="#" target="_blank" rel="noopener noreferrer">About</a></li>
+            <li><a href="{{ route('products.list') }}" target="_blank" rel="noopener noreferrer">Product</a></li>
             <li><a href="#" target="_blank" rel="noopener noreferrer">Cantact</a></li>
             <a href="#" target="_blank" rel="noopener noreferrer"><i class="bi bi-cart3"></i></a>
             <a href="{{ asset('/login') }}" target="_blank" rel="noopener noreferrer"><i class="bi bi-person-circle"></i></a>

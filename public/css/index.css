@@ -154,6 +154,10 @@ footer .link{
     width: 17.9%;
 }
 
+footer .link li{
+    list-style: none;
+}
+
 footer .copyright{
     margin-top: 140px;
     width: 75%;

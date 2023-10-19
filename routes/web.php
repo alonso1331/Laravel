@@ -1,14 +1,17 @@
 <?php
 
-use App\Http\Controllers\FacilityController;
+use App\Models\News;
+use App\Models\facility;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\FrontController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ToolboxController;
-use App\Models\facility;
-use App\Models\News;
+use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\ProductCategoryContoller;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +48,12 @@ Route::prefix('news')->group(function (){
 // });
 Route::get('/facility', [FrontController::class, 'facility'])->name('facility');
 
+// 產品
+Route::prefix('products')->group(function (){
+    Route::get('/', [FrontController::class, 'productList'])->name('products.list');
+    Route::get('/{id}', [FrontController::class, 'productDetail'])->name('products.detail');
+});
+
 Route::get('/create-news',[FrontController::class, 'createNews']);
 
 Auth::routes();
@@ -76,7 +85,15 @@ Route::prefix('/admin')->middleware(['auth'])->group(function (){
         Route::delete('/{id}', [FacilityController::class, 'destroy'])->name('facility.destroy');
     });
 
+    // 產品
+    // 編輯產品
+    Route::resource('/products', ProductController::class);
+    Route::delete('/product-image', [ProductController::class, 'imageDelete'])->name('product.image-delete');
+
+    // 產品類別
+    Route::resource('/product-categories', ProductCategoryContoller::class);
+
     // 上傳圖片
-    Route::post('/image-upload', [ToolboxController::class, 'imageUpload'])->name('tool.image_upload');
+    Route::post('/image-upload', [ToolboxController::class, 'imageUpload'])->name('tool.image-upload');
 
 });

@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.app-product')
 
 {{-- @section('title', '後台首頁') --}}
 
 @section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <style>
         #myTable th, td{
             text-align: center;
@@ -24,30 +25,35 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <h2 class="card-header pt-3 pb-2">設施介紹管理</h2>
+                <h2 class="card-header pt-3 pb-2">產品管理</h2>
                 <div class="form-group pt-4 px-3 m-0">
-                    <a href="{{ route('facility.create') }}" class="btn btn-success">新增設施</a>
+                    {{-- <a href="{{ asset('admin/news/create') }}" class="btn btn-success">新增消息</a> --}}
+                    <a href="{{ route('products.create') }}" class="btn btn-success">新增產品</a>
                 </div>
                 <hr>
                 <table id="myTable" class="display table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>標題</th>
-                            <th>圖片</th>
+                            <th>類別</th>
+                            <th>名稱</th>
+                            <th>價格</th>
+                            <th>主要圖片</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($facilities as $facility)
+                        @foreach ($products as $product)
                             <tr>
-                                <td>{{$facility->title}}</td>
-                                <td><img src="{{ Storage::url($facility->img_url) }}" alt="" width="200px"></td>
+                                <td>{{$product->productCategories->name}}</td>
+                                <td>{{$product->name}}</td>
+                                <td>{{$product->price}}</td>
+                                <td><img src="{{ Storage::url($product->image_url) }}" alt="" width="200px"></td>
                                 <td>
-                                    <a href="{{ route('facility.edit', ['id' => $facility->id]) }}" class="btn btn-primary">編輯</a>
-                                    <button type="submit" class="btn btn-danger delete-btn">刪除</button>
-                                    <form class="d-none" action="{{ route('facility.destroy', ['id' => $facility->id]) }}" method="post">
+                                    <a href="{{ route('products.edit', ['product'=>$product->id]) }}" class="btn btn-primary">編輯</a>
+                                    <button class="btn btn-danger delete-btn">刪除</button>
+                                    <form class="d-none" action="{{ route('products.destroy', $product->id) }}" method="post">
                                         @csrf
-                                        @method('delete')
+                                        @method('DELETE')
                                     </form>
                                 </td>
                             </tr>
@@ -61,6 +67,7 @@
 @endsection
 
 @section('js')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         let table = new DataTable('#myTable',{
@@ -309,7 +316,7 @@
         // 刪除功能
         const deletes = document.querySelectorAll('.delete-btn');
         // console.log(deletes);
-        deletes.forEach(deletebtn => {
+        deletes.forEach(function(deletebtn) {
             deletebtn.addEventListener('click', ()=> {
                 if (confirm('您確定要刪除嗎？')) {
                     deletebtn.nextElementSibling.submit();

@@ -8,7 +8,7 @@
 <div class="container">
     <nav class="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ asset('/admin') }}">首頁</a></li>
+            <li class="breadcrumb-item"><a href="{{ asset('/home') }}">首頁</a></li>
             <li class="breadcrumb-item"><a href="{{ route('facility.index') }}">設施介紹管理</a></li>
             <li class="breadcrumb-item active" aria-current="page">新增設施</li>
         </ol>
@@ -63,7 +63,7 @@
                 console.log(files);
 
                 // 圖片要發送到後端的路徑
-                let url = '{{route('tool.image_upload')}}';
+                let url = '{{route('tool.image-upload')}}';
                 // 利用JS建立一個form表單
                 let formData = new FormData();
                 // formDate.append(key, value);
