@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\News;
+use App\Models\Store;
 use App\Models\facility;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
@@ -8,11 +9,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ToolboxController;
 use App\Http\Controllers\FacilityController;
-use App\Http\Controllers\ProductCategoryContoller;
 use App\Http\Controllers\StoreAreaController;
+use App\Http\Controllers\ProductCategoryContoller;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,9 @@ Route::prefix('products')->group(function (){
     Route::get('/', [FrontController::class, 'productList'])->name('products.list');
     Route::get('/{id}', [FrontController::class, 'productDetail'])->name('products.detail');
 });
+
+// 門市
+Route::get('/stores', [ FrontController::class, 'storeList'])->name('store.list');
 
 Route::get('/create-news',[FrontController::class, 'createNews']);
 
@@ -97,6 +102,8 @@ Route::prefix('/admin')->middleware(['auth'])->group(function (){
     // 銷售據點
     // 區域管理
     Route::resource('/store-areas', StoreAreaController::class);
+    // 門市管理
+    Route::resource('/stores', StoreController::class);
 
     // 上傳圖片
     Route::post('/image-upload', [ToolboxController::class, 'imageUpload'])->name('tool.image-upload');

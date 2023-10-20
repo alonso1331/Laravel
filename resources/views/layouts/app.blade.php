@@ -61,7 +61,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('store-areas.index')}}">區域管理</a>
-                                    <a class="dropdown-item" href="">門市管理</a>
+                                    <a class="dropdown-item" href="{{ route('stores.index') }}">門市管理</a>
                                 </div>
                             </li>
                         @endguest
@@ -107,6 +107,13 @@
         </nav>
 
         <main class="py-4">
+            @if (Session('message'))
+            <div class="container">
+                <div class="alert {{ Session('color') }} mb-4 m-auto" role="alert">
+                    {{ Session('message') }}
+                </div>
+            </div>
+            @endif
             @yield('content')
             @yield('main')
         </main>

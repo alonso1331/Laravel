@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 
 use App\Models\News;
+use App\Models\Store;
 use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Facility;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\ProductCategory;
-use App\Models\ProductImage;
+use App\Models\StoreArea;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -63,6 +65,7 @@ class FrontController extends Controller
     {
         // $news = DB::table('news')->get();
         $news = News::get();
+
         return view('front.news.list', compact('news'));
     }
 
@@ -79,11 +82,13 @@ class FrontController extends Controller
     public function facility()
     {
         $facilities = Facility::get();
+
         return view('front.facility.list', compact('facilities'));
     }
 
     public function productList(Request $request)
     {
+        // 種類篩選
         $productCategories = ProductCategory::get();
 
         if($request->category_id){
@@ -92,6 +97,7 @@ class FrontController extends Controller
             $products = Product::get();
         }
 
+        // 顯示畫面
         return view('front.product.list', compact('products', 'productCategories'));
     }
 
@@ -102,6 +108,19 @@ class FrontController extends Controller
         // $productImages = ProductImage::where('product_id', $products->id)->get();
 
         return view('front.product.detail', compact('products'));
+    }
+
+    //門市據點
+    public function storeList(Request $request){
+        $storeAreas = StoreArea::get();
+
+        if($request->store_id){
+            $stores = Store::where('store_area_id', $request->store_id)->get();
+        }else{
+            $stores = Store::get();
+        }
+
+        return view('front.store.list', compact('stores', 'storeAreas'));
     }
 
     public function login(){

@@ -69,8 +69,8 @@ class StoreAreaController extends Controller
         return redirect()
         ->route('store-areas.index')
         ->with([
-            'message'=>'區域更新成功!!',
-            'color'=>'alert-success'
+            'message' => '區域更新成功!!',
+            'color' => 'alert-success'
         ]);
     }
 
