@@ -8,12 +8,14 @@ use App\Models\Store;
 use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Facility;
+use App\Models\StoreArea;
+use App\Mail\ContactNotify;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\StoreArea;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -51,12 +53,15 @@ class FrontController extends Controller
         //             ->withInput();
         // }
 
-        Contact::create([
+        $contact = Contact::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'message' => $request->message
         ]);
+
+        // 寄出信件
+        Mail::to($contact->email)->send(new ContactNotify());
 
         return redirect('/');
     }

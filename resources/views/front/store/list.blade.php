@@ -5,6 +5,11 @@
 @section('css')
 
 <link rel="stylesheet" href="{{ asset('css/facility.css') }}">
+<style>
+    .news-block img{
+        box-shadow: rgba(0, 0, 0, 0.85) 0px 5px 15px;
+    }
+</style>
 @endsection
 
 @section('main')
