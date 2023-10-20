@@ -1,4 +1,4 @@
-@extends('layouts.app-product')
+@extends('layouts.app')
 
 {{-- @section('title', '後台首頁') --}}
 

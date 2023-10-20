@@ -46,8 +46,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('facility.index') }}">設施介紹管理</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('products.index') }}">產品管理</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    產品管理
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('products.index') }}">產品編輯</a>
+                                    <a class="dropdown-item" href="{{ route('product-categories.index') }}">產品類別</a>
+                                </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -111,16 +117,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="summernote-bs5.js"></script> -->
-    <script>
-        $(document).ready(function() {
-            $('#content').summernote({
-                placeholder: '請輸入內容',
-                tabsize: 3,
-                height: 200
-            });
-        });
-    </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // const deletebtns = document.querySelectorAll('.delete-btn');
+        // deletebtns.forEach(deletebtn => {
+        //     deletebtn.addEventListener('click', ()=> {
+        //         if( Session('message') ){
+        //             Swal.fire({
+        //                 icon: 'error',
+        //                 title: '請確認',
+        //                 text: '該類別尚有其他商品使用中!',
+        //                 // footer: '<a href="">Why do I have this issue?</a>'
+        //             })
+        //         };
+        //     })
+        // });
+    </script> --}}
     @yield('js')
 </body>
 </html>

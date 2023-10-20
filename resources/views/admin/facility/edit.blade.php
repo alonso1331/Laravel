@@ -62,5 +62,37 @@
 @endsection
 
 @section('js')
+<script>
+    $('#content').summernote({
+        placeholder: '請輸入內容',
+        tabsize: 3,
+        height: 200,
+        callbacks: {
+            onImageUpload: function(files) {
+                // upload image to server and create imgNode...
+                console.log(files);
 
+                // 圖片要發送到後端的路徑
+                let url = '{{route('tool.image-upload')}}';
+                // 利用JS建立一個form表單
+                let formData = new FormData();
+                // formDate.append(key, value);
+                // csrf token
+                formData.append('_token', '{{ csrf_token() }}')
+                // 圖片
+                formData.append('image', files[0]);
+
+                fetch(url, {
+                    'method': 'post',
+                    'body': formData
+                }).then((response) => {
+                    return response.text();
+                }).then((data)=> {
+                    console.log(data);
+                    $('#content').summernote('insertImage', data);
+                })
+            }
+        }
+    });
+</script>
 @endsection
