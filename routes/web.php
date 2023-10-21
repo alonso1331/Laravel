@@ -28,7 +28,7 @@ use App\Http\Controllers\ProductCategoryContoller;
 */
 
 // 前台
-Route::get('/', [FrontController::class, 'index']);
+Route::get('/', [FrontController::class, 'index'])->name('index');
 
 Route::get('/welcome', [FrontController::class, 'welcome']);
 

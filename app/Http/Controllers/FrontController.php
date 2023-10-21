@@ -61,9 +61,9 @@ class FrontController extends Controller
         ]);
 
         // 寄出信件
-        Mail::to($contact->email)->send(new ContactNotify());
+        Mail::to($contact->email)->send(new ContactNotify($contact));
 
-        return redirect('/');
+        return redirect()->route('index');
     }
 
     public function newsList()

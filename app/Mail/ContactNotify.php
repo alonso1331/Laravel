@@ -2,12 +2,13 @@
 
 namespace App\Mail;
 
+use App\Models\Contact;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ContactNotify extends Mailable
 {
@@ -16,10 +17,9 @@ class ContactNotify extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        protected Contact $contact,
+    ) {}
 
     /**
      * Get the message envelope.
@@ -34,10 +34,17 @@ class ContactNotify extends Mailable
     /**
      * Get the message content definition.
      */
+    // laravel 10
     public function content(): Content
     {
         return new Content(
             view: 'emails.contact',
+            with: [
+                'contactname' => $this->contact->name,
+                'contactphone' => $this->contact->phone,
+                'contactemail' => $this->contact->email,
+                'contactmessage' => $this->contact->message
+            ],
         );
     }
 
@@ -51,6 +58,7 @@ class ContactNotify extends Mailable
         return [];
     }
 
+    //laravle 8 的用法
     // /**
     //  * Build the message.
     //  *
