@@ -15,6 +15,7 @@ use App\Http\Controllers\ToolboxController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\StoreAreaController;
 use App\Http\Controllers\ProductCategoryContoller;
+use App\Http\Controllers\ShoppingCartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,14 @@ Route::get('/facility', [FrontController::class, 'facility'])->name('facility');
 Route::prefix('products')->group(function (){
     Route::get('/', [FrontController::class, 'productList'])->name('products.list');
     Route::get('/{id}', [FrontController::class, 'productDetail'])->name('products.detail');
+});
+
+// 購物車
+Route::prefix('shopping-cart')->group(function (){
+    Route::post('/add', [ShoppingCartController::class, 'add'])->name('shopping-cart.add');
+    // Route::patch('/update', [ShoppingCartController::class, 'updateCart'])->name('');
+    Route::get('/content', [ShoppingCartController::class, 'content']);
+    Route::get('/clear', [ShoppingCartController::class, 'clear']);
 });
 
 // 門市

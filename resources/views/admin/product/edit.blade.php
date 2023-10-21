@@ -150,7 +150,7 @@
             formData.append('_method', 'delete');
             formData.append('id', imageId);
 
-            let url = '{{  route('product.image-delete') }}';
+            let url = '{{ route('product.image-delete') }}';
             fetch(url, {
                 method: 'post',
                 body: formData

@@ -171,6 +171,8 @@ return [
 
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
 
+        Darryldecode\Cart\CartServiceProvider::class,
+
     ])->toArray(),
 
     /*
@@ -188,6 +190,8 @@ return [
         // 'Example' => App\Facades\Example::class,
 
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
+
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
 
     ])->toArray(),
 

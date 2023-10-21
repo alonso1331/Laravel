@@ -23,8 +23,10 @@
         cursor: pointer;
     }
 
-    .cart span{
+    .cart input{
         width: 40px;
+        height: 32px;
+        text-align: center;
     }
 
     .cart .btn{
@@ -99,17 +101,17 @@
             </div>
             <div class="col-md-5">
                 <div class="card-body">
-                <h5 class="card-title fs-3 fw-bolder">{{ $products->name }}</h5>
-                <p class="card-text text-danger fw-bolder fs-1 text-end">${{ $products->price }}</p>
-                <p class="card-text fs-3 mt-4">{!! $products->descripte !!}</p>
-                <div class="d-flex flex-row mt-5 cart pt-3">
-                    <div class="cart-number d-flex flex-row align-items-center fs-5">數量
-                        <div class="minus bg-secondary bg-opacity-25">-</div>
-                        <span>1</span>
-                        <div class="plus bg-secondary bg-opacity-25">+</div>
+                    <h5 class="card-title fs-3 fw-bolder">{{ $products->name }}</h5>
+                    <p class="card-text text-danger fw-bolder fs-1 text-end">${{ $products->price }}</p>
+                    <p class="card-text fs-3 mt-4">{!! $products->descripte !!}</p>
+                    <div class="d-flex flex-row mt-5 cart pt-3">
+                        <div class="cart-number d-flex flex-row align-items-center fs-5">數量
+                            <div class="minus bg-secondary bg-opacity-25">-</div>
+                            <input type="text" min="1" value="1" readonly>
+                            <div class="plus bg-secondary bg-opacity-25">+</div>
+                        </div>
+                        <button data-id={{ $products->id }} class="btn btn-primary add-cart">加入購物車</button>
                     </div>
-                    <a href="#" class="btn btn-primary">加入購物車</a>
-                </div>
                 </div>
             </div>
         </div>
@@ -149,6 +151,57 @@
         prevEl: ".swiper-button-prev",
         },
     });
+
+    // 用js送購物車資訊
+    const plus = document.querySelector('.plus');
+    const minus = document.querySelector('.minus');
+    const input = document.querySelector('input');
+    const addCart = document.querySelector('.add-cart');
+
+    plus.addEventListener('click',()=> {
+        input.value = Number(input.value) + 1;
+    });
+
+    minus.addEventListener('click', ()=> {
+        if(input.value > 1){
+            input.value = Number(input.value) - 1;
+        }else{
+            input.value = 1;
+        }
+    });
+
+    addCart.addEventListener('click', ()=> {
+        // 產品ID
+        let productId = addCart.getAttribute('data-id');
+
+        // 產品數量
+        let qty = input.value;
+
+        let formData = new FormData();
+        formData.append('_token', '{{ csrf_token() }}');
+        formData.append('id', productId);
+        formData.append('qty', qty);
+
+        // fetch
+        let url = '{{ route('shopping-cart.add') }}';
+        fetch(url, {
+            method: 'post',
+            body: formData
+        }).then((response)=> {
+            return response.text();
+        }).then((data)=> {
+            // console.log(data);
+            if(data == 'success'){
+                alert('加入成功');
+            }
+        });
+
+
+
+        // 提示
+    });
+
+
 </script>
 
 @endsection
