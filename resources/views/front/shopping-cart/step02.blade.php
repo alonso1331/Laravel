@@ -1,9 +1,9 @@
 @extends('layouts.template')
 
-@section('title', '確認購物車')
+@section('title', '付款與運送方式')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/step01.css') }}">
+<link rel="stylesheet" href="{{ asset('css/step02.css') }}">
 @endsection
 
 @section('main')
@@ -22,7 +22,7 @@
                                 <span class="step01">確認購物車</span>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-center">
@@ -31,7 +31,7 @@
                                 <span class="step02">付款與運送方式</span>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-center">
@@ -50,25 +50,42 @@
                     </div>
                 </div>
 
-                {{-- 訂單明細 --}}
+                {{-- 付款與運送方式 --}}
                 <div class="mt-4 pt-4 cart-detail">
-                    <h3 class="mb-4">訂單明細</h3>
-                    @foreach ($items as $item)
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div class="d-flex align-item-center">
-                                <img src="{{ Storage::url($item->attributes->image_url) }}" alt="" class="me-3" width="200px">
-                                <div class="produc-info d-flex align-items-center">
-                                    <p>{{ $item->name }}</p>
-                                </div>
-                            </div>
-                            <div class="order-item-price">
-                                <button type="button" class="minus border-0">-</button>
-                                <input type="text" class="qty" min="1" max="999" value="{{ $item->quantity }}" readonly>
-                                <button type="button" class="plus border-0">+</button>
-                                <span class="ms-2 price" data-single="{{ $item->price }}">${{ number_format($item->price*$item->quantity) }}</span>
-                            </div>
-                        </div>
-                    @endforeach
+                    <h3 class="mb-4">付款方式</h3>
+                    <div class="form-check mb-4 ms-4">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            信用法付款
+                        </label>
+                    </div>
+                    <div class="form-check mb-4 ms-4">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            網路 ATM
+                        </label>
+                    </div>
+                    <div class="form-check mb-4 ms-4">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            超商代碼
+                        </label>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 cart-detail">
+                    <h3 class="mb-4">運送方式</h3>
+                    <div class="form-check mb-4 ms-4">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            黑貓宅配
+                        </label>
+                    </div>
+                    <div class="form-check mb-4 ms-4">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            超商店到店
+                        </label>
+                    </div>
                 </div>
 
                 {{-- 購物車的footer --}}
@@ -88,8 +105,8 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('products.list') }}" class="btn px-5 fw-bolder"><i class="fa-solid fa-arrow-left"></i>　返回購物</a>
-                        <a href="{{ route('shopping-cart.step02') }}" class="btn btn-primary">下一步</a>
+                        <a href="{{ route('shopping-cart.step01') }}" class="btn px-5 fw-bolder btn-white border-primary border border-2 text-primary">上一步</a>
+                        <a href="{{ route('shopping-cart.step03') }}" class="btn btn-primary">下一步</a>
                     </div>
                 </div>
             </div>

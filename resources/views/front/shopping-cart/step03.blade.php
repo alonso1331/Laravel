@@ -1,9 +1,9 @@
 @extends('layouts.template')
 
-@section('title', '確認購物車')
+@section('title', '付款與運送方式')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/step01.css') }}">
+<link rel="stylesheet" href="{{ asset('css/step03.css') }}">
 @endsection
 
 @section('main')
@@ -22,7 +22,7 @@
                                 <span class="step01">確認購物車</span>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-center">
@@ -31,7 +31,7 @@
                                 <span class="step02">付款與運送方式</span>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-center">
@@ -40,7 +40,7 @@
                                 <span class="step03">填寫資料</span>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="d-flex flex-column align-center progress-title">
@@ -50,25 +50,39 @@
                     </div>
                 </div>
 
-                {{-- 訂單明細 --}}
+                {{-- 付款與運送方式 --}}
                 <div class="mt-4 pt-4 cart-detail">
-                    <h3 class="mb-4">訂單明細</h3>
-                    @foreach ($items as $item)
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div class="d-flex align-item-center">
-                                <img src="{{ Storage::url($item->attributes->image_url) }}" alt="" class="me-3" width="200px">
-                                <div class="produc-info d-flex align-items-center">
-                                    <p>{{ $item->name }}</p>
-                                </div>
-                            </div>
-                            <div class="order-item-price">
-                                <button type="button" class="minus border-0">-</button>
-                                <input type="text" class="qty" min="1" max="999" value="{{ $item->quantity }}" readonly>
-                                <button type="button" class="plus border-0">+</button>
-                                <span class="ms-2 price" data-single="{{ $item->price }}">${{ number_format($item->price*$item->quantity) }}</span>
-                            </div>
+                    <h3 class="mb-4">計送資料</h3>
+                    <div class="mb-3">
+                        <label for="basic-url" class="form-label fs-5">姓名</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" placeholder="陳○○">
                         </div>
-                    @endforeach
+                    </div>
+                    <div class="mb-3">
+                        <label for="basic-url" class="form-label fs-5">電話</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="basic-url" class="form-label fs-5">Email</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" placeholder="abc123@meil.com">
+                        </div>
+                    </div>
+                    <div class="mb-3 d-flex flex-wrap justify-content-between">
+                        <label for="basic-url" class="form-label fs-5 col-12">地址</label>
+                        <div class="input-group" style="width: 49%">
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" placeholder="郵遞區號">
+                        </div>
+                        <div class="input-group" style="width: 49%">
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" placeholder="城市">
+                        </div>
+                        <div class="input-group mt-3 col-12">
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" placeholder="地址">
+                        </div>
+                    </div>
                 </div>
 
                 {{-- 購物車的footer --}}
@@ -88,8 +102,8 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('products.list') }}" class="btn px-5 fw-bolder"><i class="fa-solid fa-arrow-left"></i>　返回購物</a>
-                        <a href="{{ route('shopping-cart.step02') }}" class="btn btn-primary">下一步</a>
+                        <a href="{{ route('shopping-cart.step02') }}" class="btn px-5 fw-bolder btn-white border-primary border border-2 text-primary">上一步</a>
+                        <a href="{{ route('shopping-cart.step04') }}" class="btn btn-primary">前往付款</a>
                     </div>
                 </div>
             </div>

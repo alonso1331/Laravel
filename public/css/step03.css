@@ -30,46 +30,12 @@
     background-color: #e9ecef;
 }
 
-.step1{
+.step1, .step2, .step3{
     background-color: #198754;
     color: #fff;
 }
 
-.cart-detail img{
-    width: 200px;
-    height: 150px;
-    object-fit: fill;
-    border: 1px solid #a0a0a0;
-}
-
-.cart-detail p{
-    font-weight: bolder;
-    font-size: 20px;
-}
-
-.cart-detail span{
-    color: #a0a0a0;
-    font-size: 18px;
-}
-
-.minus, .plus{
-    width: 25px;
-}
-
-.cart-detail input{
-    width: 55px;
-    height: 30px;
-    border-radius: 6px;
-    border: 1px solid #a0a0a0;
-    text-align: center;
-}
-
-.cart-detail .price{
-    color: #000;
-    display: inline-block;
-    min-width: 100px;
-    text-align: end;
-}
+/* 中間區塊 */
 
 /* footer */
 .cart-footer{

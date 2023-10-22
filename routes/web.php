@@ -67,7 +67,9 @@ Route::prefix('shopping-cart')->group(function (){
 
     // 結帳流程
     Route::get('/step01', [ShoppingCartController::class, 'step01'])->name('shopping-cart.step01');
-
+    Route::get('/step02', [ShoppingCartController::class, 'step02'])->name('shopping-cart.step02');
+    Route::get('/step03', [ShoppingCartController::class, 'step03'])->name('shopping-cart.step03');
+    Route::get('/step04', [ShoppingCartController::class, 'step04'])->name('shopping-cart.step04');
 });
 
 // 門市
