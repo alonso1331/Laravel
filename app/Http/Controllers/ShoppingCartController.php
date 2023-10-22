@@ -17,7 +17,9 @@ class ShoppingCartController extends Controller
             'name' => $product->name,
             'price' => $product->price,
             'quantity' => $request->qty,
-            'attributes' => array()
+            'attributes' => array(
+                'image_url' => $product->image_url
+            )
             // 'associatedModel' => $product
 
             // 'id' => 1,
@@ -58,4 +60,14 @@ class ShoppingCartController extends Controller
 
         return 'clear';
     }
+
+    public function step01()
+    {
+        $items = \Cart::getContent();
+        // dd($items);
+
+        return view('front.shopping-cart.step01', compact('items'));
+    }
+
+
 }

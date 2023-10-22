@@ -60,10 +60,14 @@ Route::prefix('products')->group(function (){
 
 // 購物車
 Route::prefix('shopping-cart')->group(function (){
+    // 加入購物車
     Route::post('/add', [ShoppingCartController::class, 'add'])->name('shopping-cart.add');
-    // Route::patch('/update', [ShoppingCartController::class, 'updateCart'])->name('');
     Route::get('/content', [ShoppingCartController::class, 'content']);
     Route::get('/clear', [ShoppingCartController::class, 'clear']);
+
+    // 結帳流程
+    Route::get('/step01', [ShoppingCartController::class, 'step01'])->name('shopping-cart.step01');
+
 });
 
 // 門市
