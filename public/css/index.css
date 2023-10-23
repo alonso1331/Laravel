@@ -78,7 +78,7 @@ main{
     position: relative;
 }
 
-form{
+.index-form{
     width: 400px;
     /* height: 500px; */
     margin: 30px auto;
@@ -96,36 +96,36 @@ form{
     right: 20%;
 }
 
-form h2{
+.index-form h2{
     font-size: 30px;
     font-weight: bolder;
 }
 
-form label{
+.index-form label{
     font-size: 20px;
     margin-top: 10px;
 }
 
-form input, form textarea{
+.index-form input, .index-form textarea{
     border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 16px;
 }
 
-form input{
+.index-form input{
     padding-left: 20px;
     height: 40px;
 }
 
-form #date{
+.index-form #date{
     padding: 0px 20px;
 }
 
-form textarea{
+.index-form textarea{
     padding-left: 10px;
 }
 
-form button{
+.index-form button{
     border: 0px;
     border-radius: 10px;
     font-size: 18px;

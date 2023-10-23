@@ -32,26 +32,33 @@ class ShoppingCartController extends Controller
         return 'success';
     }
 
-    // public function update(Request $request)
-    // {
+    public function update(Request $request)
+    {
+        // 找到購物車要更新的產品id
+        $product = Product::find($request->id);
 
-    // }
+        // 更新購物車
+        \cart::update($product->id, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => $request->qty
+            ),
+        ));
+
+        // 取出該商品的數量
+        $item = \Cart::get($product->id);
+        dd($item);
+
+        // 返回該商品目前資料庫更新的數量
+        // return $item;
+    }
 
     public function content()
     {
         $items = \Cart::getContent();
-        dd($items);
-        // foreach($items as $row) {
+        // dd($items);
 
-        //     echo $row->id; // row ID
-        //     echo $row->name;
-        //     echo $row->qty;
-        //     echo $row->price;
-
-        //     echo $item->associatedModel->id; // whatever properties your model have
-        //     echo $item->associatedModel->name; // whatever properties your model have
-        //     echo $item->associatedModel->description; // whatever properties your model have
-        // }
+        return view('front.shopping-cart.step01');
     }
 
     public function clear()
@@ -63,7 +70,7 @@ class ShoppingCartController extends Controller
 
     public function step01()
     {
-        $items = \Cart::getContent();
+        $items = \Cart::getContent()->sortBy('id');
         // dd($items);
 
         return view('front.shopping-cart.step01', compact('items'));
@@ -74,13 +81,37 @@ class ShoppingCartController extends Controller
         return view('front.shopping-cart.step02');
     }
 
+    public function step02Store(Request $request)
+    {
+        // payment 0:信用卡付款 1:網路 ATM 2:超商代碼
+        // shipment 0:黑貓宅配 1:超商店到店
+        // dd($request->all());
+        session([
+            'payment' => $request->payment,
+            'shipment' => $request->shipment
+        ]);
+
+        // dd(session()->all());
+        return redirect()->route('shopping-cart.step03');
+    }
+
     public function step03()
     {
         return view('front.shopping-cart.step03');
     }
 
+    public function step03Store(Request $request)
+    {
+        // dd($request->all());
+        return redirect()->route('shopping-cart.step04');
+    }
+
     public function step04()
     {
-        return view('front.shopping-cart.step04');
+        $items = \Cart::getContent()->sortBy('id');
+
+        return view('front.shopping-cart.step04', compact('items'));
+        // return redirect()->route('index');
     }
+
 }

@@ -35,8 +35,6 @@
     color: #fff;
 }
 
-/* 中間區塊 */
-
 /* footer */
 .cart-footer{
     margin-top: 80px;
@@ -44,6 +42,11 @@
 
 .count, .subtotal, .fee, .total{
     color: #aaa;
+}
+
+.cart-footer .btn-white:hover{
+    color: #fff !important;
+    background-color: #0b5ed7;
 }
 
 .cart-footer .btn-primary{

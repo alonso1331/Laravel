@@ -12,43 +12,7 @@
         <div class="card">
             <div class="card-body p-5">
                 {{-- 購物車的header --}}
-                <div class="cart-header">
-                    <h2 class="card-title fw-bolder mb-4">購物車</h2>
-                    <div class="d-flex progress-block px-4 pb-4 mb-4 justify-content-around">
-                        {{-- 進度條 --}}
-                        <div class="d-flex flex-row align-item-center">
-                            <div class="progress-title">
-                                <div class="d-flex justify-content-center step step1">1</div>
-                                <span class="step01">確認購物車</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row align-center">
-                            <div class="progress-title">
-                                <div class="d-flex justify-content-center step step2">2</div>
-                                <span class="step02">付款與運送方式</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row align-center">
-                            <div class="progress-title">
-                                <div class="d-flex justify-content-center step step3">3</div>
-                                <span class="step03">填寫資料</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-column align-center progress-title">
-                            <div class="d-flex justify-content-center step step4">4</div>
-                            <span class="step04">完成訂購</span>
-                        </div>
-                    </div>
-                </div>
+                @include('front.shopping-cart.shopping-cart-header',['step'=>1])
 
                 {{-- 訂單明細 --}}
                 <div class="mt-4 pt-4 cart-detail">
@@ -61,7 +25,7 @@
                                     <p>{{ $item->name }}</p>
                                 </div>
                             </div>
-                            <div class="order-item-price">
+                            <div class="order-item-price item" data-id="{{ $item->id }}">
                                 <button type="button" class="minus border-0">-</button>
                                 <input type="text" class="qty" min="1" max="999" value="{{ $item->quantity }}" readonly>
                                 <button type="button" class="plus border-0">+</button>
@@ -72,26 +36,7 @@
                 </div>
 
                 {{-- 購物車的footer --}}
-                <div class="cart-footer">
-                    <div class="d-flex flex-column justify-content-end align-items-end my-4">
-                        <div class="w-25 d-flex justify-content-between">
-                            <span class="count">數量：</span><span class="fw-bolder fs-5">1</span>
-                        </div>
-                        <div class="w-25 d-flex justify-content-between">
-                            <span class="subtotal">小計：</span><span class="fw-bolder fs-5">$6,400</span>
-                        </div>
-                        <div class="w-25 d-flex justify-content-between">
-                            <span class="fee">運費：</span><span class="fw-bolder fs-5">$100</span>
-                        </div>
-                        <div class="w-25 d-flex justify-content-between">
-                            <span class="total">總計：</span><span class="fw-bolder fs-5">$6,500</span>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('products.list') }}" class="btn px-5 fw-bolder"><i class="fa-solid fa-arrow-left"></i>　返回購物</a>
-                        <a href="{{ route('shopping-cart.step02') }}" class="btn btn-primary">下一步</a>
-                    </div>
-                </div>
+                @include('front.shopping-cart.shopping-cart-footer', ['step'=>1])
             </div>
         </div>
     </div>
@@ -106,17 +51,47 @@
 
     // 數量計算
     function qtyCalc(element, compute) {
-        const qtyElement = element.parentElement.querySelector('.qty');
-        let answer = 0;
+        const itemElement = element.parentElement;
+        const qtyElement = itemElement.querySelector('.qty');
+
+        // let answer = 0;
         // if(compute == 'minus'){
         //     qty = Number(qtyElement.value) - 1;
 
         // }else{
         //     qty = Number(qtyElement.value) + 1;
         // }
+
         // 上述if判斷式可精簡為，但在click事件內要設定相對應的值
-        answer = Number(qtyElement.value) + compute;
-        qtyElement.value = answer < 1 ? 1 : answer;
+        let qty = Number(qtyElement.value) + compute;
+        qty = qty < 1 ? 1 : qty;
+
+        // 更新資料庫的數量
+        let productId = itemElement.getAttribute('data-id');
+
+        let formData = new FormData();
+        formData.append('_token', '{{ csrf_token() }}');
+        formData.append('id', productId);
+        formData.append('qty', qty);
+
+        // fetch的route 設定錯，出現HTTP 500 ，要注意
+        // let url = '{{ route('shopping-cart.update') }}';
+        let url = '{{ route('shopping-cart.step01') }}';
+        fetch(url, {
+            'method': 'post',
+            'body': formData
+        }).then(function(response){
+            return response.text();
+        }).then(function(item) {
+            if(item.quantity){
+                qtyElement.value = item.quantity;
+                // 因為非同步，會導致數量更新，但是金額沒更新，所以把計算放在這裡處裡
+                priceCalc(element);
+                TotalPriceCalc();
+            }
+        });
+
+        // qtyElement.value = qty < 1 ? 1 : qty;
     }
 
     // 價格計算
@@ -129,12 +104,41 @@
         priceElement.textContent = `\$ ${total.toLocaleString()}`;
     }
 
+    //訂單總額
+    function TotalPriceCalc(){
+        const itemElements = document.querySelectorAll('.item');
+        const orderQtyElement = document.querySelector('#qty');
+        const orderSubtotalElement = document.querySelector('#subtotal');
+        const orderFeeElement = document.querySelector('#fee');
+        const orderTotalElement = document.querySelector('#total');
+        // 總數
+        let totalQty = 0;
+        // 商品單件小計
+        let subtotal = 0;
+        //運費，此頁還不會生成運費
+        let fee = 60;
+        // 所有商品的總金額
+        let total = 0;
+        itemElements.forEach(function (itemElement) {
+            const qtyElement = itemElement.querySelector('.qty');
+            const priceElement = itemElement.querySelector('.price');
+            totalQty += Number(qtyElement.value);
+            subtotal += qtyElement.value * priceElement.getAttribute('data-single');
+        });
+        total = fee + subtotal;
+
+        orderQtyElement.textContent = Number(totalQty);
+        orderSubtotalElement.textContent = `\$${subtotal.toLocaleString()}`;
+        orderTotalElement.textContent = `\$${total.toLocaleString()}`;
+    }
+
     minusBtns.forEach(function(minusBtn) {
         minusBtn.addEventListener('click', function(){
             // if判斷是會用到
             //qtyCalc(this, 'minus');
             qtyCalc(this, -1);
-            priceCalc(this);
+            // 因為非同步處理的問題，要放在更新數量的函式處理
+            // priceCalc(this);
         });
     });
 
@@ -143,11 +147,12 @@
             // if判斷是會用到
             // qtyCalc(this, 'plus');
             qtyCalc(this, 1);
-            priceCalc(this);
+            // 因為非同步處理的問題，要放在更新數量的函式處理
+            // priceCalc(this);
         });
     });
 
-
+    TotalPriceCalc();
 </script>
 
 @endsection
