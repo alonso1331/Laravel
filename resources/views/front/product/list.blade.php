@@ -23,8 +23,8 @@
                 <img src="{{ Storage::url($product->image_url) }}" class="card-img-top" alt="...">
                 <div class="card-body text-center">
                     <a href="{{ route('products.detail', $product->id) }}"><h5 class="card-title fw-bolder text-dark">{{ $product->name }}</h5></a>
-                    <p class="card-text">${{ $product->price }}</p>
-                    <a href="#" class="btn btn-primary">加入購物車</a>
+                    <p class="card-text">${{ number_format($product->price) }}</p>
+                    <a href="#" class="btn btn-warning">詳細介紹</a>
                 </div>
               </div>
             @endforeach

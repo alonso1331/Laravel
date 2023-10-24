@@ -68,13 +68,14 @@ Route::prefix('shopping-cart')->group(function (){
     Route::get('/clear', [ShoppingCartController::class, 'clear']);
 
     // 結帳流程
-    Route::get('/step01', [ShoppingCartController::class, 'step01'])->name('shopping-cart.step01');
-    Route::get('/step02', [ShoppingCartController::class, 'step02'])->name('shopping-cart.step02');
-    Route::post('/step02', [ShoppingCartController::class, 'step02Store'])->name('shopping-cart.step02-store');
-    Route::get('/step03', [ShoppingCartController::class, 'step03'])->name('shopping-cart.step03');
-    Route::post('/step03', [ShoppingCartController::class, 'step03Store'])->name('shopping-cart.step03-store');
-    Route::get('/step04', [ShoppingCartController::class, 'step04'])->name('shopping-cart.step04');
-
+    Route::middleware(['cart.check'])->group(function(){
+        Route::get('/step01', [ShoppingCartController::class, 'step01'])->name('shopping-cart.step01');
+        Route::get('/step02', [ShoppingCartController::class, 'step02'])->name('shopping-cart.step02');
+        Route::post('/step02', [ShoppingCartController::class, 'step02Store'])->name('shopping-cart.step02-store');
+        Route::get('/step03', [ShoppingCartController::class, 'step03'])->name('shopping-cart.step03');
+        Route::post('/step03', [ShoppingCartController::class, 'step03Store'])->name('shopping-cart.step03-store');
+        Route::get('/step04/{order_no}', [ShoppingCartController::class, 'step04'])->name('shopping-cart.step04');
+    });
 });
 
 // 門市

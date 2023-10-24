@@ -102,7 +102,7 @@
             <div class="col-md-5">
                 <div class="card-body">
                     <h5 class="card-title fs-3 fw-bolder">{{ $products->name }}</h5>
-                    <p class="card-text text-danger fw-bolder fs-1 text-end">${{ $products->price }}</p>
+                    <p class="card-text text-danger fw-bolder fs-1 text-end">${{ number_format($products->price) }}</p>
                     <p class="card-text fs-3 mt-4">{!! $products->descripte !!}</p>
                     <div class="d-flex flex-row mt-5 cart pt-3">
                         <div class="cart-number d-flex flex-row align-items-center fs-5">數量
@@ -195,10 +195,6 @@
                 alert('加入成功');
             }
         });
-
-
-
-        // 提示
     });
 
 

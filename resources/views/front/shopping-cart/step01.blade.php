@@ -127,7 +127,7 @@
         });
         total = fee + subtotal;
 
-        orderQtyElement.textContent = Number(totalQty);
+        orderQtyElement.textContent = totalQty;
         orderSubtotalElement.textContent = `\$${subtotal.toLocaleString()}`;
         orderTotalElement.textContent = `\$${total.toLocaleString()}`;
     }

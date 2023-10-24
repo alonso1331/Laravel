@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use League\CommonMark\Node\Query\OrExpr;
 
 class ShoppingCartController extends Controller
 {
@@ -102,16 +105,41 @@ class ShoppingCartController extends Controller
 
     public function step03Store(Request $request)
     {
-        // dd($request->all());
-        return redirect()->route('shopping-cart.step04');
+        // 建立訂單
+        $order = Order::create([
+            // 用time()生成訂單編號
+            'order_no' => 'DP'.time(),
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'address' => $request->address,
+            'payment' => session('payment'),
+            'shipment' => session('shipment'),
+        ]);
+
+        // 把購物車的內容找出來後，存到資料庫裡
+        $items = \Cart::getContent();
+        foreach ($items as $item){
+            $product = Product::find($item->id);
+            OrderDetail::create([
+                'order_id' => $order->id,
+                'product_id' => $product->id,
+                'name'  => $product->name,
+                'price' => $product->price,
+                'qty' => $item->quantity,
+                'image_url' => $product->image_url
+            ]);
+        }
+        // 清空購物車
+        \Cart::clear();
+        return redirect()->route('shopping-cart.step04', ['order_no'=>$order->order_no]);
     }
 
-    public function step04()
+    public function step04($orderNo)
     {
-        $items = \Cart::getContent()->sortBy('id');
+        // 藉由step03 產生的DP 訂單編號，作為索引找出資料庫的資料
+        $order = Order::with('orderDetails')->where('order_no', $orderNo)->first();
 
-        return view('front.shopping-cart.step04', compact('items'));
-        // return redirect()->route('index');
+        return view('front.shopping-cart.step04', compact('order'));
     }
-
 }

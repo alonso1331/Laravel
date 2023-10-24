@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', '填寫運送資料')
+@section('title', '完成訂購')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/step04.css') }}">
@@ -17,30 +17,41 @@
                 {{-- 付款與運送方式 --}}
                 <div class="mt-4 pt-4 cart-detail fs-5">
                     <h3 class="mb-4">訂單明細</h3>
-                    @foreach ($items as $item)
+                    {{-- 不建議在blade 長其他php 程式 --}}
+                    @php
+                        $totalQty = 0;
+                        $subtotal = 0;
+                    @endphp
+                    @foreach ($order->orderDetails as $orderDetail)
+                    {{-- @foreach ($orders as $order) --}}
+                    @php
+                        $totalQty += $orderDetail->qty;
+                        $totalPrice = $orderDetail->price * $orderDetail->qty;
+                        $subtotal += $totalPrice;
+                    @endphp
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="d-flex align-item-center">
-                                <img src="{{ Storage::url($item->attributes->image_url) }}" alt="" class="me-3" width="200px">
-                                <div class="produc-info d-flex align-items-center">{{ $item->name }}</div>
+                                <img src="{{ Storage::url($orderDetail->image_url) }}" alt="" class="me-3" width="200px">
+                                <div class="produc-info d-flex align-items-center">{{ $orderDetail->name }}</div>
                             </div>
-                            <div class="order-item-price item" data-id="{{ $item->id }}">
-                                <span class="qty">X {{ $item->quantity }}</span>
-                                <span class="ms-4 price" data-single="{{ $item->price }}">合計：<span class="fw-bolder">${{ number_format($item->price*$item->quantity) }}</span></span>
+                            <div class="order-item-price item">
+                                <span class="qty">X {{ $orderDetail->qty }}</span>
+                                <span class="ms-4 price">合計：<span class="fw-bolder">$ {{ $totalPrice }}</span></span>
                             </div>
                         </div>
                     @endforeach
                     <hr>
                     <h3 class="my-4">寄送資料</h3>
                     <div class="ms-4">
-                        <div class="mb-2">姓名：<span>陳○○</span></div>
-                        <div class="mb-2">電話：<span>02-23456789</span></div>
-                        <div class="mb-2">Email：<span>123@mail.com</span></div>
-                        <div>地址：<span>臺北市萬華區大理街123號</span></div>
+                        <div class="mb-2">姓名：<span>{{ $order->name }}</span></div>
+                        <div class="mb-2">電話：<span>{{ $order->phone }}</span></div>
+                        <div class="mb-2">Email：<span>{{ $order->email }}</span></div>
+                        <div>地址：<span>{{ $order->address }}</span></div>
                     </div>
                 </div>
 
                 {{-- 購物車的footer --}}
-                @include('front.shopping-cart.shopping-cart-footer', ['step'=>4])
+                @include('front.shopping-cart.shopping-cart-footer', ['step'=>4, 'totalQty'=>$totalQty, 'subtotal'=>$subtotal])
             </div>
         </div>
     </div>
