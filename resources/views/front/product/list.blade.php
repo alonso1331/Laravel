@@ -3,8 +3,8 @@
 @section('title', '產品資訊 NEWS')
 
 @section('css')
-
 <link rel="stylesheet" href="{{ asset('css/product.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.css" />
 @endsection
 
 @section('main')
@@ -24,7 +24,7 @@
                 <div class="card-body text-center">
                     <a href="{{ route('products.detail', $product->id) }}"><h5 class="card-title fw-bolder text-dark">{{ $product->name }}</h5></a>
                     <p class="card-text">${{ number_format($product->price) }}</p>
-                    <a href="#" class="btn btn-warning">詳細介紹</a>
+                    <a href="{{ route('products.detail', $product->id) }}" class="btn btn-warning">詳細介紹</a>
                 </div>
               </div>
             @endforeach
@@ -33,7 +33,18 @@
 @endsection
 
 @section('js')
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // Swiper JS
+    @if (session('message')){
+        Swal.fire({
+            icon: 'error',
+            title: '{{session('message')}}',
+        })
+    }
+    @endif
+
     // 自己嘗試用JS寫出篩選功能，先註解，因為重點是用後端篩選功能
     // const tabs = document.querySelectorAll('.sort .btn');
     // const cards = document.querySelectorAll('.card');

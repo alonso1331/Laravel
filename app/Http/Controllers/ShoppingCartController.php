@@ -41,7 +41,7 @@ class ShoppingCartController extends Controller
         $product = Product::find($request->id);
 
         // 更新購物車
-        \cart::update($product->id, array(
+        \Cart::update($product->id, array(
             'quantity' => array(
                 'relative' => false,
                 'value' => $request->qty
@@ -50,26 +50,33 @@ class ShoppingCartController extends Controller
 
         // 取出該商品的數量
         $item = \Cart::get($product->id);
-        dd($item);
+        // dd($item);
 
         // 返回該商品目前資料庫更新的數量
-        // return $item;
+        return $item;
     }
 
-    public function content()
+    public function destroy(Request $request)
     {
-        $items = \Cart::getContent();
-        // dd($items);
+        \Cart::remove($request->id);
 
-        return view('front.shopping-cart.step01');
+        return 'success';
     }
 
-    public function clear()
-    {
-        \Cart::clear();
+    // public function content()
+    // {
+    //     $items = \Cart::getContent();
+    //     // dd($items);
 
-        return 'clear';
-    }
+    //     return view('front.shopping-cart.step01');
+    // }
+
+    // public function clear()
+    // {
+    //     \Cart::clear();
+
+    //     return 'clear';
+    // }
 
     public function step01()
     {

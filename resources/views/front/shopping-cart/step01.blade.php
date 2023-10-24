@@ -4,6 +4,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/step01.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.css" />
 @endsection
 
 @section('main')
@@ -18,8 +19,11 @@
                 <div class="mt-4 pt-4 cart-detail">
                     <h3 class="mb-4">訂單明細</h3>
                     @foreach ($items as $item)
-                        <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="cart-info d-flex justify-content-between align-items-center mb-4">
                             <div class="d-flex align-item-center">
+                                <div class="produc-info d-flex align-items-center">
+                                    <div class="delete-btn btn-danger" data-id="{{ $item->id }}">X</div>
+                                </div>
                                 <img src="{{ Storage::url($item->attributes->image_url) }}" alt="" class="me-3" width="200px">
                                 <div class="produc-info d-flex align-items-center">
                                     <p>{{ $item->name }}</p>
@@ -45,9 +49,11 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     const minusBtns = document.querySelectorAll('.minus');
     const plusBtns = document.querySelectorAll('.plus');
+    const deleteBtns = document.querySelectorAll('.delete-btn');
 
     // 數量計算
     function qtyCalc(element, compute) {
@@ -74,9 +80,7 @@
         formData.append('id', productId);
         formData.append('qty', qty);
 
-        // fetch的route 設定錯，出現HTTP 500 ，要注意
-        // let url = '{{ route('shopping-cart.update') }}';
-        let url = '{{ route('shopping-cart.step01') }}';
+        let url = '{{ route('shopping-cart.update') }}';
         fetch(url, {
             'method': 'post',
             'body': formData
@@ -149,6 +153,49 @@
             qtyCalc(this, 1);
             // 因為非同步處理的問題，要放在更新數量的函式處理
             // priceCalc(this);
+        });
+    });
+
+    // 刪除功能
+    deleteBtns.forEach((deleteBtn) => {
+        deleteBtn.addEventListener('click', ()=>{
+            Swal.fire({
+                title: '是否確定刪除商品?',
+                // text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '是',
+                cancelButtonText: '否',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        '刪除成功',
+                        '您的商品已刪除'
+                    )
+
+                    let productId = deleteBtn.getAttribute('data-id');
+                    let formData = new FormData();
+                    formData.append('_token', '{{ csrf_token() }}');
+                    formData.append('id', productId);
+
+                    let url = '{{ route('shopping-cart.destroy')}}';
+                    fetch(url,{
+                        method: 'post',
+                        body: formData
+                    }).then((response)=>{
+                        return response.text();
+                    }).then((data)=>{
+                        if(data == 'success'){
+                            const cartInfo = document.querySelector('.cart-info');
+                            // deleteBtn.parentElement.parentElement.parentElement.remove();
+                            cartInfo.remove();
+                            TotalPriceCalc();
+                        }
+                    });
+                }
+            })
         });
     });
 

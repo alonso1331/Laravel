@@ -72,6 +72,19 @@
     text-align: end;
 }
 
+/* 刪除按鈕 */
+.delete-btn{
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: #f00;
+    border-radius: 10%;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+}
+
 /* footer */
 .cart-footer{
     margin-top: 80px;

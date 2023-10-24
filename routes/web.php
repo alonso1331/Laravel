@@ -63,9 +63,10 @@ Route::prefix('shopping-cart')->group(function (){
     // 加入購物車
     Route::post('/add', [ShoppingCartController::class, 'add'])->name('shopping-cart.add');
     Route::post('/update', [ShoppingCartController::class, 'update'])->name('shopping-cart.update');
+    Route::post('/delete', [ShoppingCartController::class, 'destroy'])->name('shopping-cart.destroy');
 
-    Route::get('/content', [ShoppingCartController::class, 'content']);
-    Route::get('/clear', [ShoppingCartController::class, 'clear']);
+    // Route::get('/content', [ShoppingCartController::class, 'content']);
+    // Route::get('/clear', [ShoppingCartController::class, 'clear']);
 
     // 結帳流程
     Route::middleware(['cart.check'])->group(function(){
@@ -74,8 +75,8 @@ Route::prefix('shopping-cart')->group(function (){
         Route::post('/step02', [ShoppingCartController::class, 'step02Store'])->name('shopping-cart.step02-store');
         Route::get('/step03', [ShoppingCartController::class, 'step03'])->name('shopping-cart.step03');
         Route::post('/step03', [ShoppingCartController::class, 'step03Store'])->name('shopping-cart.step03-store');
-        Route::get('/step04/{order_no}', [ShoppingCartController::class, 'step04'])->name('shopping-cart.step04');
     });
+    Route::get('/step04/{order_no}', [ShoppingCartController::class, 'step04'])->name('shopping-cart.step04');
 });
 
 // 門市

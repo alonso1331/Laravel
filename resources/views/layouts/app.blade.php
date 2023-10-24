@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css">
     <!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.css">
     <link href="summernote-bs5.css" rel="stylesheet"> -->
     <style>
         .note-btn.dropdown-toggle:after{
@@ -130,7 +131,7 @@
         // const deletebtns = document.querySelectorAll('.delete-btn');
         // deletebtns.forEach(deletebtn => {
         //     deletebtn.addEventListener('click', ()=> {
-        //         if( Session('message') ){
+        //         if( session('message') ){
         //             Swal.fire({
         //                 icon: 'error',
         //                 title: '請確認',

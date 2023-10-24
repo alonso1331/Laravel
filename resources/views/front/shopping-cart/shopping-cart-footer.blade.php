@@ -1,16 +1,16 @@
 <div class="cart-footer">
     <div class="d-flex flex-column justify-content-end align-items-end my-4">
         <div class="w-25 d-flex justify-content-between">
-            <span class="count">數量：</span><span class="fw-bolder fs-5">{{ $totalQty ?? \Cart::getTotalQuantity()}}</span>
+            <span class="count">數量：</span><span class="fw-bolder fs-5" id="qty">{{ $totalQty ?? \Cart::getTotalQuantity()}}</span>
         </div>
         <div class="w-25 d-flex justify-content-between">
-            <span class="subtotal">小計：</span><span class="fw-bolder fs-5">${{number_format($subtotal ?? \Cart::getSubTotal())}}</span>
+            <span class="subtotal">小計：</span><span class="fw-bolder fs-5" id="subtotal">${{number_format($subtotal ?? \Cart::getSubTotal())}}</span>
         </div>
         <div class="w-25 d-flex justify-content-between">
-            <span class="fee">運費：</span><span class="fw-bolder fs-5">$60</span>
+            <span class="fee">運費：</span><span class="fw-bolder fs-5" id="fee">$60</span>
         </div>
         <div class="w-25 d-flex justify-content-between">
-            <span class="total">總計：</span><span class="fw-bolder fs-5">${{number_format(($subtotal ?? \Cart::getTotal())+60)}}</span>
+            <span class="total">總計：</span><span class="fw-bolder fs-5" id="total">${{number_format(($subtotal ?? \Cart::getTotal())+60)}}</span>
         </div>
     </div>
 
