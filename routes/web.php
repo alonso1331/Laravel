@@ -79,6 +79,14 @@ Route::prefix('shopping-cart')->group(function (){
     Route::get('/step04/{order_no}', [ShoppingCartController::class, 'step04'])->name('shopping-cart.step04');
 });
 
+// 綠界金流
+Route::prefix('/cart_ecpay')->group(function () {
+    // 當消費者付款完成後，綠界會將付款結果參數以幕後(Serve POST)回傳到該網址
+    Route::post('/notify', [ShoppingCartController::class, 'notifyUrl'])->naem('notity');
+    // 付款完成後，綠界會將付款結果參數以幕前(Clinet POST)回傳到該網址
+    Route::post('/return', [ShoppingCartController::class, 'returnUrl'])->naem('return');
+});
+
 // 門市
 Route::get('/stores', [ FrontController::class, 'storeList'])->name('store.list');
 

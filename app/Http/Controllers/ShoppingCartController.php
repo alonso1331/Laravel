@@ -6,10 +6,19 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use TsaiYiHua\ECPay\Checkout;
+use TsaiYiHua\ECPay\Services\StringService;
+use TsaiYiHua\ECPay\Collections\CheckoutResponseCollection;
 use League\CommonMark\Node\Query\OrExpr;
 
 class ShoppingCartController extends Controller
 {
+    public function __construct(Checkout $checkout, CheckoutResponseCollection $checkoutResponse)
+    {
+        $this->checkout = $checkout;
+        $this->checkoutResponse = $checkoutResponse;
+    }
+
     public function add(Request $request)
     {
         // 取得要加入購物車商品的資訊
@@ -149,4 +158,34 @@ class ShoppingCartController extends Controller
 
         return view('front.shopping-cart.step04', compact('order'));
     }
+
+    public function notifyUrl(Request $request)
+    {
+        $serverPost = $request->post();
+        $checkMacValue = $request->post('CheckMacValue');
+        unset($serverPost['CheckMacValue']);
+        $checkCode = StringService::checkMacValueGenerator($serverPost);
+        if($checkMacValue == $checkCode) {
+            return '1|OK';
+        }else{
+            return '0|FAIL';
+        }
+    }
+
+    public function returnUrl(Request $request)
+    {
+        $serverPost = $request->post();
+        $checkMacValue = $request->post('CheckMacValue');
+        unset($serverPost['CheckMacValue']);
+        $checkCode = StringService::checkMacValueGenerator($serverPost);
+        if($checkMacValue == $checkCode) {
+            if(!empty($request->input('redirect'))){
+                return redirect($request->input('redirect'));
+            }
+        }else{
+            dd($this->checkoutResponse->collectResponse($serverPost));
+        }
+    }
+
+
 }
