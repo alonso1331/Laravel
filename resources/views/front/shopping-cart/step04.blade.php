@@ -41,12 +41,21 @@
                         </div>
                     @endforeach
                     <hr>
-                    <h3 class="my-4">寄送資料</h3>
+                    <h3 class="mt-5 mb-4">寄送資料</h3>
                     <div class="ms-4">
                         <div class="mb-2">姓名：<span>{{ $order->name }}</span></div>
                         <div class="mb-2">電話：<span>{{ $order->phone }}</span></div>
                         <div class="mb-2">Email：<span>{{ $order->email }}</span></div>
                         <div>地址：<span>{{ $order->address }}</span></div>
+                    </div>
+                    <h3 class="mt-5 mb-4">付款及運送方式</h3>
+                    @php
+                        use App\Models\Order;
+                    @endphp
+                    <div class="ms-4">
+                        <div class="mb-2">付款方式：<span>{{ Order::PAYMENT[$order->payment] }}</span></div>
+                        <div class="mb-2">付款狀態：<span>{{ Order::ISPAID[$order->is_paid] }}</span></div>
+                        <div class="mb-2">運送方式：<span>{{ Order::SHIPMENT[$order->shipment] }}</span></div>
                     </div>
                 </div>
 

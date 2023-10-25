@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use TsaiYiHua\ECPay\Checkout;
+use League\CommonMark\Node\Query\OrExpr;
 use TsaiYiHua\ECPay\Services\StringService;
 use TsaiYiHua\ECPay\Collections\CheckoutResponseCollection;
-use League\CommonMark\Node\Query\OrExpr;
 
 class ShoppingCartController extends Controller
 {
@@ -135,6 +135,9 @@ class ShoppingCartController extends Controller
 
         // 把購物車的內容找出來後，存到資料庫裡
         $items = \Cart::getContent();
+        // 要傳給綠界的商品訊息
+        $itemInfo = [];
+
         foreach ($items as $item){
             $product = Product::find($item->id);
             OrderDetail::create([
@@ -145,10 +148,41 @@ class ShoppingCartController extends Controller
                 'qty' => $item->quantity,
                 'image_url' => $product->image_url
             ]);
+
+            $new_ary = [
+                'name' => $product->name,
+                'qty' => $item->quantity,
+                'price' => $product->price,
+                'unit' => '個'
+            ];
+            // 把上述陣列存進$itemInfo
+            array_push($itemInfo, $new_ary);
         }
+
+        $new_ary = [
+            'name' => '運費',
+            'qty' => 1,
+            'price' => 60,
+            'unit' => '個'
+        ];
+        array_push($itemInfo, $new_ary);
+
+        // 第三分支付
+        $formData = [
+            'UserId' => 1,
+            'ItemDescription' => '產品簡介',
+            'Items' => $itemInfo,
+            'OrderId' => $order->order_no,
+            'PaymentMethod' => 'Credit',
+        ];
+
         // 清空購物車
         \Cart::clear();
-        return redirect()->route('shopping-cart.step04', ['order_no'=>$order->order_no]);
+
+        // 用套件將表單$formData 送出
+
+        return $this->checkout->setNotifyUrl(route('notify'))->setReturnUrl(route('return'))->setPostData($formData)->send();
+        // return redirect()->route('shopping-cart.step04', ['order_no'=>$order->order_no]);
     }
 
     public function step04($orderNo)
@@ -166,6 +200,15 @@ class ShoppingCartController extends Controller
         unset($serverPost['CheckMacValue']);
         $checkCode = StringService::checkMacValueGenerator($serverPost);
         if($checkMacValue == $checkCode) {
+            $order = Order::where('order_no', $request->MerchantTradeNo)->first();
+            if($request->RtnCode == 1){
+                // 簡便寫法
+                // $order->is_paid = 1;
+                // 正規寫法
+                $order->update([
+                    'is_paid' => 1
+                ]);
+            }
             return '1|OK';
         }else{
             return '0|FAIL';
@@ -175,17 +218,23 @@ class ShoppingCartController extends Controller
     public function returnUrl(Request $request)
     {
         $serverPost = $request->post();
+        // dd($serverPost);
         $checkMacValue = $request->post('CheckMacValue');
         unset($serverPost['CheckMacValue']);
         $checkCode = StringService::checkMacValueGenerator($serverPost);
         if($checkMacValue == $checkCode) {
             if(!empty($request->input('redirect'))){
                 return redirect($request->input('redirect'));
+            }else{
+                // dd($this->checkoutResponse->collectResponse($serverPost));
+                $order = Order::where('order_no', $request->MerchantTradeNo)->first();
+                if($request->RtnCode == 1){
+                    $order->update([
+                        'is_paid' => 1
+                    ]);
+                }
             }
-        }else{
-            dd($this->checkoutResponse->collectResponse($serverPost));
+            return redirect()->route('shopping-cart.step04', ['order_no'=>$request->MerchantTradeNo]);
         }
     }
-
-
 }

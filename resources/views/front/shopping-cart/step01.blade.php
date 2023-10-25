@@ -22,7 +22,7 @@
                         <div class="cart-info d-flex justify-content-between align-items-center mb-4">
                             <div class="d-flex align-item-center">
                                 <div class="produc-info d-flex align-items-center">
-                                    <div class="delete-btn btn-danger" data-id="{{ $item->id }}">X</div>
+                                    <div class="delete-btn btn-danger d-flex justify-content-center align-items-center " data-id="{{ $item->id }}">X</div>
                                 </div>
                                 <img src="{{ Storage::url($item->attributes->image_url) }}" alt="" class="me-3" width="200px">
                                 <div class="produc-info d-flex align-items-center">

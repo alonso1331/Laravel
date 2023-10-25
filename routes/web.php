@@ -82,9 +82,9 @@ Route::prefix('shopping-cart')->group(function (){
 // 綠界金流
 Route::prefix('/cart_ecpay')->group(function () {
     // 當消費者付款完成後，綠界會將付款結果參數以幕後(Serve POST)回傳到該網址
-    Route::post('/notify', [ShoppingCartController::class, 'notifyUrl'])->naem('notity');
+    Route::post('/notify', [ShoppingCartController::class, 'notifyUrl'])->name('notify');
     // 付款完成後，綠界會將付款結果參數以幕前(Clinet POST)回傳到該網址
-    Route::post('/return', [ShoppingCartController::class, 'returnUrl'])->naem('return');
+    Route::post('/return', [ShoppingCartController::class, 'returnUrl'])->name('return');
 });
 
 // 門市
