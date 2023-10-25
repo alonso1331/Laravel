@@ -33,7 +33,7 @@
                                 <button type="button" class="minus border-0">-</button>
                                 <input type="text" class="qty" min="1" max="999" value="{{ $item->quantity }}" readonly>
                                 <button type="button" class="plus border-0">+</button>
-                                <span class="ms-2 price" data-single="{{ $item->price }}">${{ number_format($item->price*$item->quantity) }}</span>
+                                <span class="ms-2 price" data-single="{{ $item->price }}">$ {{ number_format($item->price*$item->quantity) }}</span>
                             </div>
                         </div>
                     @endforeach
@@ -55,55 +55,7 @@
     const plusBtns = document.querySelectorAll('.plus');
     const deleteBtns = document.querySelectorAll('.delete-btn');
 
-
-    // function qtyCalc(element, compute){
-    //     const itemElement = element.parentElement;
-    //     const qtyElement = itemElement.querySelector('.qty');
-    //     let qty = Number(qtyElement.value) + compute;
-    //     let productId = itemElement.getAttribute('data-id');
-    //     qty = qty < 1 ? 1 : qty;
-
-    //     let formData = new FormData();
-    //     formData.append('_token', '{{ csrf_token() }}');
-    //     formData.append('id', productId);
-    //     formData.append('qty', qty);
-
-    //     let url= '{{ route('shopping-cart.update') }}';
-    //     fetch(url,{
-    //         'method': 'post',
-    //         'body': formData
-    //     }).then(function(response){
-    //         return response.json();
-    //     }).then(function(item){
-    //         if(item.quantity){
-    //             qtyElement.value = item.quantity;
-    //             singleItemTotalCale(element);
-    //         }
-    //     });
-    // }
-
-    // function singleItemTotalCale(element){
-    //     const priceElement = element.parentElement.querySelector('.price');
-    //     const qtyElement = element.parentElement.querySelector('.qty');
-    //     let price = priceElement.getAttribute('data-single');
-    //     let qty =  qtyElement.value;
-    //     let total = price * qty;
-    //     priceElement.textContent = `\$${total.toLocaleString()}`;
-    // }
-
-    // minusBtns.forEach(function(minusBtn) {
-    //     minusBtn.addEventListener('click', function(){
-    //         qtyCalc(this, -1);
-    //     })
-    // });
-
-    // plusBtns.forEach(function(plusBtn){
-    //     plusBtn.addEventListener('click',function(){
-    //         qtyCalc(this, 1);
-    //     })
-    // });
-
-    // 數量計算
+    // 單一商品數量計算
     function qtyCalc(element, compute) {
         const itemElement = element.parentElement;
         const qtyElement = itemElement.querySelector('.qty');
@@ -111,7 +63,6 @@
         // let answer = 0;
         // if(compute == 'minus'){
         //     qty = Number(qtyElement.value) - 1;
-
         // }else{
         //     qty = Number(qtyElement.value) + 1;
         // }
@@ -133,21 +84,21 @@
             'method': 'post',
             'body': formData
         }).then(function(response){
-            // 資料回傳是陣列，要用json()，因為這個地方原先打成text()，資料回傳沒接到，造成前端的數字沒有及時更新
             return response.json();
         }).then(function(item) {
             if(item.quantity){
                 qtyElement.value = item.quantity;
                 // 因為非同步，會導致數量更新，但是金額沒更新，所以把計算放在這裡處裡
                 priceCalc(element);
-                totalPriceCalc();
+                // 忘了在括號放入element造成前端畫面沒有更新
+                // totalPriceCalc();
             }
         });
 
         // qtyElement.value = qty < 1 ? 1 : qty;
     }
 
-    // 價格計算
+    // 單一商品價格計算
     function priceCalc(element) {
         const priceElement = element.parentElement.querySelector('.price');
         const qtyElement = element.parentElement.querySelector('.qty');
@@ -157,7 +108,7 @@
         priceElement.textContent = `\$ ${total.toLocaleString()}`;
     }
 
-    //訂單總額
+    // 訂單總額
     function totalPriceCalc(){
         const itemElements = document.querySelectorAll('.item');
         const orderQtyElement = document.querySelector('#qty');
@@ -240,7 +191,7 @@
                             const cartInfo = document.querySelector('.cart-info');
                             // deleteBtn.parentElement.parentElement.parentElement.remove();
                             cartInfo.remove();
-                            totalPriceCalc();
+                            TotalPriceCalc();
                         }
                     });
                 }
