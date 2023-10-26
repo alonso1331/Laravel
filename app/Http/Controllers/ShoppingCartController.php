@@ -7,9 +7,9 @@ use App\Models\Product;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use TsaiYiHua\ECPay\Checkout;
-use League\CommonMark\Node\Query\OrExpr;
 use TsaiYiHua\ECPay\Services\StringService;
 use TsaiYiHua\ECPay\Collections\CheckoutResponseCollection;
+use League\CommonMark\Node\Query\OrExpr;
 
 class ShoppingCartController extends Controller
 {
@@ -180,7 +180,6 @@ class ShoppingCartController extends Controller
         \Cart::clear();
 
         // 用套件將表單$formData 送出
-
         return $this->checkout->setNotifyUrl(route('notify'))->setReturnUrl(route('return'))->setPostData($formData)->send();
         // return redirect()->route('shopping-cart.step04', ['order_no'=>$order->order_no]);
     }
