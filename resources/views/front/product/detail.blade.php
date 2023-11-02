@@ -139,8 +139,8 @@
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
-<!-- Initialize Swiper -->
 <script>
+    // <!-- Initialize Swiper -->
     var swiper = new Swiper(".mySwiper", {
         pagination: {
         el: ".swiper-pagination",

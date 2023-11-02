@@ -33,10 +33,10 @@
 @endsection
 
 @section('js')
-<!-- Swiper JS -->
+<!-- sweetalert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Swiper JS
+    // sweetalert2
     @if (session('message')){
         Swal.fire({
             icon: 'error',

@@ -70,11 +70,11 @@
 
 @section('js')
 <script>
-    const next = document.querySelector('#next');
-    next.addEventListener('click', function(){
-        // document.querySelector('#step03').submit();
-        // 當click 前往結帳的按鈕時，同時click #sumbit-btn，藉由當#sumbit-btn 做表單驗證
-        document.querySelector('#sumbit-btn').click();
-    });
+    // const next = document.querySelector('#next');
+    // next.addEventListener('click', function(){
+    //     // document.querySelector('#step03').submit();
+    //     // 當click 前往結帳的按鈕時，同時click #sumbit-btn，藉由當#sumbit-btn 做表單驗證
+    //     document.querySelector('#sumbit-btn').click();
+    // });
 </script>
 @endsection
